@@ -4,7 +4,8 @@ import { UPLOAD_POST } from "../redux/actionCreators/userActionCreators";
 
 function UploadPost(props) {
   const {
-    history: { push }
+    history: { push },
+    UPLOAD_POST
   } = props;
   const [state, setState] = useState({
     image: "",
@@ -17,7 +18,10 @@ function UploadPost(props) {
       <h1 className="text-center">Upload Post</h1>
       <form
         onSubmit={e => {
+          console.log("first");
           e.preventDefault();
+          console.log("second");
+          console.log(state);
           if (
             state.title === "" ||
             state.description === "" ||
@@ -25,14 +29,17 @@ function UploadPost(props) {
             state.isPublic === ""
           )
             return;
+          console.log("three");
           UPLOAD_POST({ state, push });
-          push("/timeline");
+          console.log("four");
+          // push("/timeline");
         }}
       >
         <div className="form-group">
           <label htmlFor="image">Image</label>
           <input
             onChange={e => setState({ ...state, image: e.target.value })}
+            value={state.image}
             type="file"
             multiple
             className="form-control"
@@ -71,8 +78,11 @@ function UploadPost(props) {
             value={state.isPublic}
             id="exampleInputPassword1"
           >
-            <option value="true">Public</option>
-            <option value="false">Private</option>
+            <option value="" disabled>
+              select privacy
+            </option>
+            <option value="public">Public</option>
+            <option value="private">Private</option>
           </select>
         </div>
         <button type="submit" className="btn btn-primary">

@@ -9,7 +9,12 @@ const LOGIN_USER = payload => async dispatch => {
 
     dispatch({
       type: "LOGIN_USER",
-      payload: { userName: data.msg, token: data.token }
+      payload: {
+        userName: data.msg,
+        token: data.token.token,
+        posts: data.token.posts,
+        favourites: data.token.favourites
+      }
     });
     localStorage.setItem("token", JSON.stringify(data.token));
     payload.push("/timeline");
@@ -61,8 +66,22 @@ const UPLOAD_POST = payload => async dispatch => {
   try {
     let formData = new FormData();
     formData.append("image", payload.image);
+    formData.append("imagetitle", payload.title);
+    formData.append("description", payload.description);
+    formData.append("privacystatus", payload.isPublic);
 
-    // const { data } = await axiosInstance("");
+    const res = await fetch(
+      "https://mighty-reaches-93229.herokuapp.com/addData",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: formData
+      }
+    );
+    const resJson = await res.json();
+    console.log(resJson);
   } catch (error) {
     console.log(error);
   }

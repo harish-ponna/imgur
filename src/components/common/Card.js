@@ -3,14 +3,19 @@ import "../../styles/Card.css";
 
 function Card(props) {
   const {
-    post: { imageUrl, title, description }
+    post: { image, imagetitle, description }
   } = props;
 
   return (
     <>
-      <img className="card-img-top" src={imageUrl} alt="Card img cap" />
+      <img
+        className="card-img-top"
+        height={200}
+        src={image}
+        alt="Card img cap"
+      />
       <div className="card-body">
-        <h5 className="card-title">{title}</h5>
+        <h5 className="card-title">{imagetitle}</h5>
         <p className="card-text">{description}</p>
         {}
       </div>

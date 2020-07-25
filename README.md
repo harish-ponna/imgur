@@ -1,1 +1,1 @@
-deployed url: imgur-monthly-test-7.netlify.app# imgur
+deployed url: imgur-monthly-test-7.netlify.app

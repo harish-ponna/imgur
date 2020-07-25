@@ -1,34 +1,28 @@
 import React, { useEffect } from "react";
 import "../styles/Timeline.css";
 import { connect } from "react-redux";
-import { allState } from "../redux/mapStateToProps";
+// import { allState } from "../redux/mapStateToProps";
 import Card from "../components/common/Card";
 import { Link } from "react-router-dom";
 import { ADD_TO_FAVOURITES } from "../redux/actionCreators/userActionCreators";
 import { SET_TIMELINE } from "../redux/actionCreators/timelineActionCreators";
 
 function Timeline(props) {
-  const {
-    allState: {
-      // userState,
-      timelineState: { allPosts }
-    },
-    SET_TIMELINE
-  } = props;
-  console.log("set", SET_TIMELINE);
-  console.log("set", ADD_TO_FAVOURITES);
+  const { SET_TIMELINE } = props;
 
   useEffect(() => {
-    // SET_TIMELINE();
-  });
+    SET_TIMELINE();
+  }, [SET_TIMELINE]);
+
+  console.log(props);
   return (
     <div className="Timeline">
-      {allPosts.length ? (
-        allPosts.map(post => (
-          <div key={post._id} className="card mt-5" style={{ width: "200px" }}>
+      {props.allState.timelineState.allPosts.length ? (
+        props.allState.timelineState.allPosts.map(post => (
+          <div key={post.id} className="card mt-5" style={{ width: "200px" }}>
             <Card post={post} />
             <Link
-              onClick={() => ADD_TO_FAVOURITES(post._id)}
+              onClick={() => ADD_TO_FAVOURITES(post.id)}
               to=""
               className="btn btn-primary"
             >
@@ -42,8 +36,11 @@ function Timeline(props) {
     </div>
   );
 }
+const mapStateToProps = state => {
+  return { allState: { ...state } };
+};
 
 export default connect(
-  allState,
+  mapStateToProps,
   { SET_TIMELINE, ADD_TO_FAVOURITES }
 )(Timeline);

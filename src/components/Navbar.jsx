@@ -10,7 +10,6 @@ function Navbar(props) {
       user: { userName }
     }
   } = props;
-  console.log("nav", props);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
